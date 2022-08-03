@@ -1,9 +1,6 @@
-[package]
-name = "roughly"
-version = "0.1.0"
-authors = ["ArtRand <art.rand@gmail.com>"]
-edition = "2018"
-
-[dependencies]
-clap = "2.32.0"
-
+[workspace]
+members = [
+    "roughlylib",
+    "roughly",
+    "roughly_rs"
+]

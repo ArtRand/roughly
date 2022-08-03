@@ -1,0 +1,10 @@
+[package]
+name = "roughlylib"
+version = "0.1.0"
+authors = ["ArtRand <art.rand@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "roughlylib"
+
+[dependencies]

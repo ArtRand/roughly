@@ -1,22 +1,17 @@
-extern crate clap;
-extern crate roughly;
-
 use clap::{App, Arg, ArgMatches};
-use roughly::aligner;
-use roughly::dna;
+use roughlylib::aligner;
+use roughlylib::dna;
 
-fn arg_to_float(matches: &ArgMatches, name: &str) -> f64 {
-    let score: f64;
+fn arg_to_float(matches: &ArgMatches, name: &str) -> Result<f64, String> {
     let arg = matches.value_of(name).unwrap_or_default();
     if let Ok(s) = arg.parse::<f64>() {
-        score = s;
+        Ok(s)
     } else {
-        panic!("failed to parse {}", )
+        Err(format!("failed to parse {}", arg))
     }
-    score
 }
 
-fn main() {
+fn main() -> Result<(), String> {
     let matches = App::new("roughly: Smith-Waterman in Rust")
         .version("0.1.0")
         .author("Art Rand")
@@ -73,12 +68,13 @@ fn main() {
     // }
 
     let sub: aligner::SubstitutionMatrix = aligner::SubstitutionMatrix {
-        match_score: arg_to_float(&matches, "MATCH"),
-        mismatch_score: arg_to_float(&matches, "MISMATCH"),
-        gap_score: arg_to_float(&matches, "GAP"),
+        match_score: arg_to_float(&matches, "MATCH")?,
+        mismatch_score: arg_to_float(&matches, "MISMATCH")?,
+        gap_score: arg_to_float(&matches, "GAP")?,
     };
 
     let aln = aligner::align(&a, &b, &sub);
     let trace_back = aligner::do_traceback(a, b, &aln);
     println!("\n{}\n", trace_back);
+    Ok(())
 }

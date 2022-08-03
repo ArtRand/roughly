@@ -1,0 +1,9 @@
+[package]
+name = "roughly"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+roughlylib = { path = "../roughlylib" }
+clap = "2.32.0"
